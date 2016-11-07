@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Are we running as root?
 if [[ $EUID -ne 0 ]]; then
 	echo "This script must be run as root. Please re-run like this:"
@@ -7,9 +8,9 @@ if [[ $EUID -ne 0 ]]; then
 	exit
 fi
 
-# Check that we are running on Ubuntu 14.04 LTS (or 14.04.xx).
-if [ "`lsb_release -d | sed 's/.*:\s*//' | sed 's/14\.04\.[0-9]/14.04/' `" != "Ubuntu 14.04 LTS" ]; then
-	echo "Mail-in-a-Box only supports being installed on Ubuntu 14.04, sorry. You are running:"
+# Check that we are running on Ubuntu 16.04 LTS (or 14.04.xx).
+if [ "`lsb_release -d | sed 's/.*:\s*//' | sed 's/16\.04\.[0-9]/16.04/' `" != "Ubuntu 16.04 LTS" ]; then
+	echo "we only supports being installed on Ubuntu old/new version, sorry. You are running:"
 	echo
 	lsb_release -d | sed 's/.*:\s*//'
 	echo
@@ -29,14 +30,14 @@ TOTAL_PHYSICAL_MEM=$(head -n 1 /proc/meminfo | awk '{print $2}')
 if [ $TOTAL_PHYSICAL_MEM -lt 500000 ]; then
 if [ ! -d /vagrant ]; then
 	TOTAL_PHYSICAL_MEM=$(expr \( \( $TOTAL_PHYSICAL_MEM \* 1024 \) / 1000 \) / 1000)
-	echo "Your Mail-in-a-Box needs more memory (RAM) to function properly."
+	echo "Your website needs more memory (RAM) to function properly."
 	echo "Please provision a machine with at least 512 MB, 1 GB recommended."
 	echo "This machine has $TOTAL_PHYSICAL_MEM MB memory."
 	exit
 fi
 fi
 if [ $TOTAL_PHYSICAL_MEM -lt 750000 ]; then
-	echo "WARNING: Your Mail-in-a-Box has less than 768 MB of memory."
+	echo "WARNING: Your Website has less than 768 MB of memory."
 	echo "         It might run unreliably when under heavy load."
 fi
 
@@ -49,7 +50,7 @@ fi
 
 # Check that no .wgetrc exists
 if [ -e ~/.wgetrc ]; then
-	echo "Mail-in-a-Box expects no overrides to wget defaults, ~/.wgetrc exists"
+	echo "Website expects no overrides to wget defaults, ~/.wgetrc exists"
 	exit
 fi
 
@@ -61,7 +62,7 @@ fi
 ARCHITECTURE=$(uname -m)
 if [ "$ARCHITECTURE" != "x86_64" ] && [ "$ARCHITECTURE" != "i686" ]; then
 if [ -z "$ARM" ]; then
-	echo "Mail-in-a-Box only supports x86_64 or i686 and will not work on any other architecture, like ARM."
+	echo "We only supports x86_64 or i686 and will not work on any other architecture, like ARM."
 	echo "Your architecture is $ARCHITECTURE"
 	exit
 fi
