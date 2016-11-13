@@ -36,7 +36,7 @@ if [ ! -d /vagrant ]; then
 	exit
 fi
 fi
-if [ $TOTAL_PHYSICAL_MEM -lt 750000 ]; then
+if [ $TOTAL_PHYSICAL_MEM -lt 500000 ]; then
 	echo "WARNING: Your Website has less than 768 MB of memory."
 	echo "         It might run unreliably when under heavy load."
 fi
